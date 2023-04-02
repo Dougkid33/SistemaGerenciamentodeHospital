@@ -1,42 +1,49 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class FranquiaDAO {
-    private List<Franquia> franquias = new ArrayList<>();
+    private Franquia[] franquias = new Franquia[100];
     private int nextId = 1;
+    private int count = 0;
 
     // métodos CRUD
 
-    public List<Franquia> getAll() {
+    public Franquia[] buscarTodas() {
         return franquias;
     }
 
-    public Franquia getById(int id) {
-        for (Franquia franquia : franquias) {
-            if (franquia.getId() == id) {
-                return franquia;
+    public Franquia buscarFranquia(int id) {
+        for (int i = 0; i < count; i++) {
+            if (franquias[i].getId() == id) {
+                return franquias[i];
             }
         }
         return null;
     }
 
-    public void create(Franquia franquia) {
+    public void criarFranquia(Franquia franquia) {
         franquia.setId(nextId++);
-        franquias.add(franquia);
+        franquias[count++] = franquia;
     }
 
-    public void update(Franquia franquia) {
-        for (int i = 0; i < franquias.size(); i++) {
-            if (franquias.get(i).getId() == franquia.getId()) {
-                franquias.set(i, franquia);
+    public void editarFranquia(Franquia franquia) {
+        for (int i = 0; i < count; i++) {
+            if (franquias[i].getId() == franquia.getId()) {
+                franquias[i] = franquia;
                 return;
             }
         }
     }
 
-    public void delete(int id) {
-        franquias.removeIf(franquia -> franquia.getId() == id);
+    public void deletarFranquia(int id) {
+        for (int i = 0; i < count; i++) {
+            if (franquias[i].getId() == id) {
+                for (int j = i; j < count - 1; j++) {
+                    franquias[j] = franquias[j + 1];
+                }
+                franquias[count - 1] = null;
+                count--;
+                return;
+            }
+        }
     }
 }

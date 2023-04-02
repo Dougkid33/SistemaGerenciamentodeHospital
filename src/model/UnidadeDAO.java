@@ -1,42 +1,49 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class UnidadeDAO {
-    private List<Unidade> unidades = new ArrayList<>();
+    private Unidade[] unidades = new Unidade[10];
     private int nextId = 1;
 
     // métodos CRUD
 
-    public List<Unidade> getAll() {
+    public Unidade[] listarTodas() {
         return unidades;
     }
 
-    public Unidade getById(int id) {
+    public Unidade listarUnidade(int id) {
         for (Unidade unidade : unidades) {
-            if (unidade.getId() == id) {
+            if (unidade != null && unidade.getId() == id) {
                 return unidade;
             }
         }
         return null;
     }
 
-    public void create(Unidade unidade) {
+    public void criarUnidade(Unidade unidade) {
         unidade.setId(nextId++);
-        unidades.add(unidade);
-    }
-
-    public void update(Unidade unidade) {
-        for (int i = 0; i < unidades.size(); i++) {
-            if (unidades.get(i).getId() == unidade.getId()) {
-                unidades.set(i, unidade);
+        for (int i = 0; i < unidades.length; i++) {
+            if (unidades[i] == null) {
+                unidades[i] = unidade;
                 return;
             }
         }
     }
 
-    public void delete(int id) {
-        unidades.removeIf(unidade -> unidade.getId() == id);
+    public void editarUnidade(Unidade unidade) {
+        for (int i = 0; i < unidades.length; i++) {
+            if (unidades[i] != null && unidades[i].getId() == unidade.getId()) {
+                unidades[i] = unidade;
+                return;
+            }
+        }
+    }
+
+    public void deletarUnidade(int id) {
+        for (int i = 0; i < unidades.length; i++) {
+            if (unidades[i] != null && unidades[i].getId() == id) {
+                unidades[i] = null;
+                return;
+            }
+        }
     }
 }

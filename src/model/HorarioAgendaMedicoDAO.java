@@ -1,42 +1,49 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class HorarioAgendaMedicoDAO {
-    private List<HorarioAgendaMedico> horarios = new ArrayList<>();
+    private HorarioAgendaMedico[] horarios = new HorarioAgendaMedico[10];
     private int nextId = 1;
 
     // métodos CRUD
 
-    public List<HorarioAgendaMedico> getAll() {
+    public HorarioAgendaMedico[] listarTodos() {
         return horarios;
     }
 
-    public HorarioAgendaMedico getById(int id) {
+    public HorarioAgendaMedico listarHorarioAM(int id) {
         for (HorarioAgendaMedico horario : horarios) {
-            if (horario.getId() == id) {
+            if (horario != null && horario.getId() == id) {
                 return horario;
             }
         }
         return null;
     }
 
-    public void create(HorarioAgendaMedico horario) {
+    public void criarAgendaMedico(HorarioAgendaMedico horario) {
         horario.setId(nextId++);
-        horarios.add(horario);
+        for (int i = 0; i < horarios.length; i++) {
+            if (horarios[i] == null) {
+                horarios[i] = horario;
+                break;
+            }
+        }
     }
 
-    public void update(HorarioAgendaMedico horario) {
-        for (int i = 0; i < horarios.size(); i++) {
-            if (horarios.get(i).getId() == horario.getId()) {
-                horarios.set(i, horario);
+    public void editarAgendaMedico(HorarioAgendaMedico horario) {
+        for (int i = 0; i < horarios.length; i++) {
+            if (horarios[i] != null && horarios[i].getId() == horario.getId()) {
+                horarios[i] = horario;
                 return;
             }
         }
     }
 
-    public void delete(int id) {
-        horarios.removeIf(horario -> horario.getId() == id);
+    public void deletarAgendaMedico(int id) {
+        for (int i = 0; i < horarios.length; i++) {
+            if (horarios[i] != null && horarios[i].getId() == id) {
+                horarios[i] = null;
+                return;
+            }
+        }
     }
 }

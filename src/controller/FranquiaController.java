@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.List;
-
 import model.Franquia;
 import model.FranquiaDAO;
 
@@ -10,16 +8,23 @@ public class FranquiaController {
 
     // métodos CRUD
 
-    public List<Franquia> getAll() {
-        return dao.getAll();
+    public Franquia[] buscarTodas() {
+        return dao.buscarTodas();
     }
 
-    public Franquia getById(int id) {
-        return dao.getById(id);
+    public Franquia buscarFranquia(int id) {
+        return dao.buscarFranquia(id);
     }
 
-    public void create(Franquia franquia) {
-        dao.create(franquia);
+    public void criarFranquia(Franquia franquia) {
+        dao.criarFranquia(franquia);
     }
-    
+
+    public void editarFranquia(Franquia franquia) {
+        dao.editarFranquia(franquia);
+    }
+
+    public void deletarFranquia(int id) {
+        dao.deletarFranquia(id);
+    }
 }
